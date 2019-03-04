@@ -88,8 +88,7 @@ def parse_file( fname, points, transform, screen, color ):
         elif f[i]== "save":
             clear_screen(screen)
             draw_lines(points,screen,color)
-            pars= f[i+1]
-            fname= pars[0]
+            fname= f[i+1]
             save_extension(screen,fname)
         elif f[i]== "quit":
             break
