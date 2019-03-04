@@ -33,6 +33,63 @@ The file follows the following format:
 See the file script for an example of the file format
 """
 def parse_file( fname, points, transform, screen, color ):
-    f= open(fname,"r")
-    #and call everything it might not work so redo structure
-    pass
+    f = open(fname,'r')
+    f= f.read().split('\n')#infile now a list of lines
+    for i in range(len(f)):
+        if f[i]== "line": # adds a line to edge matrix
+            pars= f[i+1] #parameters for line
+            splt= pars.split(' ') #pars in a list now
+            x0=int(splt[0])
+            y0=int(splt[1])
+            z0=int(splt[2])
+            x1=int(splt[3])
+            y1=int(splt[4])
+            z1=int(splt[5])
+            add_edge(points,x0,y0,z0,x1,y1,z1)
+        elif f[i]== "ident": #transform to identity
+            ident(transform)
+        elif f[i]== "scale": #transform * scale matrix
+            pars= f[i+1]
+            splt=pars.split(' ')
+            sx=int(splt[0])
+            sy=int(splt[1])
+            sz=int(splt[2])
+            scale= make_scale(sx,sy,sz)
+            matrix_mult(scale,points)
+        elif f[i]== "translate":
+            pars= f[i+1]
+            splt=pars.split(' ')
+            tx=int(splt[0])
+            ty=int(splt[1])
+            tz=int(splt[2])
+            trans= make_translate(tx,ty,tz)
+            matrix_mult(trans,points)
+        elif f[i]== "rotate":
+            pars= f[i+1]
+            splt=pars.split(' ')
+            axis=splt[0]
+            theta = int(splt[1])
+            theta= math.radians(theta)
+            if axis== "x":
+                rotate= make_rotX(theta)
+                matrix_mult(rotate,points)
+            elif axis== "y":
+                rotate= make_rotY(theta)
+                matrix_mult(rotate,points)
+            else:
+                rotate= make_rotZ(theta)
+                matrix_mult(rotate,points)
+        elif f[i]== "apply":
+            matrix_mult(transform,points)
+        elif f[i]== "display":
+            clear_screen(screen)
+            draw_lines(points,screen,color)
+            display(screen)
+        elif f[i]== "save":
+            clear_screen(screen)
+            draw_lines(points,screen,color)
+            pars= f[i+1]
+            fname= pars[0]
+            save_extension(screen,fname)
+        elif f[i]== "quit":
+            break

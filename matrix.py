@@ -23,7 +23,7 @@ def make_rotY( theta ):
     return [[math.cos(theta),0,math.sin(theta),0],[0,1,0,0],[-math.sin(theta),0,math.cos(theta),0],[0,0,0,1]]
 
 def make_rotZ( theta ):
-    return [[math.cos(theta),-math.sin(theta),0,0][math.sin(theta),math.cos(theta),0,0][0,0,1,0][0,0,0,1]]
+    return [[math.cos(theta),-math.sin(theta),0,0],[math.sin(theta),math.cos(theta),0,0],[0,0,1,0],[0,0,0,1]]
 
 #print the matrix such that it looks like
 #the template in the top comment
@@ -33,7 +33,7 @@ def print_matrix( matrix ):
         for c in range( len(matrix) ):
             s+= str(matrix[c][r]) + ' '
         s+= '\n'
-    print s
+    print(s)
 
 #turn the paramter matrix into an identity matrix
 #you may assume matrix is square

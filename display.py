@@ -23,6 +23,8 @@ def new_screen( width = XRES, height = YRES ):
 def plot( screen, color, x, y ):
     newy = YRES - 1 - y
     if ( x >= 0 and x < XRES and newy >= 0 and newy < YRES ):
+        newy=int(newy)
+        x=int(x)
         screen[newy][x] = color[:]
 
 def clear_screen( screen ):
@@ -57,4 +59,3 @@ def display( screen ):
     p = Popen( ['display', ppm_name], stdin=PIPE, stdout = PIPE )
     p.communicate()
     remove(ppm_name)
-
